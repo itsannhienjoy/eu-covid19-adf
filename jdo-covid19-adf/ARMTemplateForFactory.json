@@ -1053,7 +1053,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "df_transform_hpitalAdmissions",
+								"referenceName": "df_transform_hospitalAdmissions",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1083,7 +1083,7 @@
 				"lastPublishTime": "2025-05-04T09:59:09Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_transform_hpitalAdmissions')]"
+				"[concat(variables('factoryId'), '/dataflows/df_transform_hospitalAdmissions')]"
 			]
 		},
 		{
@@ -2405,7 +2405,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/df_transform_hpitalAdmissions')]",
+			"name": "[concat(parameters('factoryName'), '/df_transform_hospitalAdmissions')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
