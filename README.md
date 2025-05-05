@@ -14,7 +14,7 @@ This project orchestrates the end-to-end data integration of Europe COVID-19 dat
 
 ## Project Structure
 Directory structure:
-└── itsannhienjoy-eu-covid19-adf/
+```└── itsannhienjoy-eu-covid19-adf/ 
     ├── README.md
     ├── publish_config.json
     ├── dataflow/        --  # Contains all data flow definitions
@@ -22,13 +22,14 @@ Directory structure:
     ├── factory/         --  # Factory configuration
     ├── linkedService/   --  # Linked service connections
     ├── pipeline/        --  # Pipeline definitions
-    └── trigger/         --  # Pipeline triggers
+    └── trigger/         --  # Pipeline triggers```
 
 ## Data Source
 Europe COVID-19 datasets were collected from the European Centre for Disease Prevention and Control (ECDC).
 
 ## Technology Stack
 1. Azure Data Factory
+
 Pipelines
 
 📄 Pipeline: pl_ingest_ecdc
@@ -57,11 +58,13 @@ Processes raw testing data by integrating date and country dimensions, performin
 ![image](https://github.com/user-attachments/assets/e352e9ff-5cb7-484e-a1a2-01671c00d1e3)
 
 2. Databricks
+
 The pl_process_population pipeline executes a Databricks notebook to transform raw population data by age group. It filters for data from 2019, cleans non-numeric values, pivots the data by age group, and enriches it with country metadata. The result is a structured dataset showing population distribution across age bands, which is then written to the processed layer in the data lake.
 ![image](https://github.com/user-attachments/assets/85b73a5e-f506-47d9-8658-7c85894b8c60)
 ![image](https://github.com/user-attachments/assets/38cc78c8-308d-40bf-ab22-05a02ab78967)
 
 3. Azure Data Lake Gen 2
+
 Used for lookup, raw and processed data storage.
 ![image](https://github.com/user-attachments/assets/73735056-4068-42ac-84d5-e12af47ee09a)
 
