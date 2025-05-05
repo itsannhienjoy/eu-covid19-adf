@@ -22,7 +22,8 @@ Directory structure:
     ├── factory/         --  # Factory configuration
     ├── linkedService/   --  # Linked service connections
     ├── pipeline/        --  # Pipeline definitions
-    └── trigger/         --  # Pipeline triggers```
+    └── trigger/         --  # Pipeline triggers
+```
 
 ## Data Source
 Europe COVID-19 datasets were collected from the European Centre for Disease Prevention and Control (ECDC).
