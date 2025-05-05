@@ -64,7 +64,8 @@ Processes raw testing data by integrating date and country dimensions, performin
 
 2. Databricks
 
-Executes a Databricks notebook to transform raw population data. It filters to 2019, cleans percentage values, pivots by age group, enriches with country metadata, and saves the processed output to ADLS.
+The pipeline pl_process_population executes a Databricks notebook to transform raw population data. It filters to 2019, cleans percentage values, pivots by age group, enriches with country metadata, and saves the processed output to ADLS.
+
 ![image](https://github.com/user-attachments/assets/85b73a5e-f506-47d9-8658-7c85894b8c60)
 
 ![image](https://github.com/user-attachments/assets/38cc78c8-308d-40bf-ab22-05a02ab78967)
