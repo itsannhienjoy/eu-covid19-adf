@@ -26,7 +26,7 @@ Directory structure:
 ```
 
 ## Data Source
-[Europe COVID-19 datasets were collected from the European Centre for Disease Prevention and Control (ECDC).](https://www.ecdc.europa.eu/en)
+Europe COVID-19 datasets were collected from the [European Centre for Disease Prevention and Control (ECDC).](https://www.ecdc.europa.eu/en)
 
 ## Technology Stack
 1. Azure Data Factory
