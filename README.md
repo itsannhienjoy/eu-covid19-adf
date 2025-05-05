@@ -26,7 +26,7 @@ Directory structure:
 ```
 
 ## Data Source
-Europe COVID-19 datasets were collected from the European Centre for Disease Prevention and Control (ECDC).
+[Europe COVID-19 datasets were collected from the European Centre for Disease Prevention and Control (ECDC).](https://www.ecdc.europa.eu/en)
 
 ## Technology Stack
 1. Azure Data Factory
@@ -48,20 +48,24 @@ Processes raw case and death data using the df_transform_casesDeaths data flow, 
 Data flows
 🔄 Data Flow: df_transform_hospitalAdmissions
 Transforms raw hospital admissions data by joining with lookup tables, aggregating by date and country, and creating weekly and daily outputs.
-![image](https://github.com/user-attachments/assets/94e360a9-5fa1-494e-82db-41fe97d2a071)
+![image](https://github.com/user-attachments/assets/37b5b87f-97a5-471c-8ceb-dc372138f7c6)
+
 
 🔄 Data Flow: df_transform_casesDeaths
 Filters for European countries, pivots COVID-19 case/death indicators, enriches with metadata, and exports structured results.
-![image](https://github.com/user-attachments/assets/5017f050-eb0f-4b17-951f-b304e7b73e43)
+![image](https://github.com/user-attachments/assets/aaebb0f1-6811-46c9-9ee3-1fb69885e330)
+
 
 🔄 Data Flow: df_transform_testing
 Processes raw testing data by integrating date and country dimensions, performing weekly aggregation, and exporting the results.
-![image](https://github.com/user-attachments/assets/e352e9ff-5cb7-484e-a1a2-01671c00d1e3)
+![image](https://github.com/user-attachments/assets/2b74ac0a-586a-4a5d-9d13-7182390f2916)
+
 
 2. Databricks
 
-The pl_process_population pipeline executes a Databricks notebook to transform raw population data by age group. It filters for data from 2019, cleans non-numeric values, pivots the data by age group, and enriches it with country metadata. The result is a structured dataset showing population distribution across age bands, which is then written to the processed layer in the data lake.
+Executes a Databricks notebook to transform raw population data. It filters to 2019, cleans percentage values, pivots by age group, enriches with country metadata, and saves the processed output to ADLS.
 ![image](https://github.com/user-attachments/assets/85b73a5e-f506-47d9-8658-7c85894b8c60)
+
 ![image](https://github.com/user-attachments/assets/38cc78c8-308d-40bf-ab22-05a02ab78967)
 
 3. Azure Data Lake Gen 2
@@ -70,3 +74,13 @@ Used for lookup, raw and processed data storage.
 ![image](https://github.com/user-attachments/assets/73735056-4068-42ac-84d5-e12af47ee09a)
 
 5. Azure SQL DB
+
+Azure SQL DB is used as a final destination for curated COVID-19 datasets. Data from processed pipelines (e.g., testing or hospital admissions) can be written to SQL tables for easy querying, reporting, or BI consumption.
+
+![image](https://github.com/user-attachments/assets/f6c213fc-4714-453f-8580-55d98f22b417)
+
+![image](https://github.com/user-attachments/assets/5401d8e4-4503-442a-9203-a0f108ab9d0a)
+
+![image](https://github.com/user-attachments/assets/e6526950-9f90-41f6-927a-133971af7ced)
+
+
