@@ -73,7 +73,7 @@ Executes a Databricks notebook to transform raw population data. It filters to 2
 Used for lookup, raw and processed data storage.
 ![image](https://github.com/user-attachments/assets/73735056-4068-42ac-84d5-e12af47ee09a)
 
-5. Azure SQL DB
+4. Azure SQL DB
 
 Azure SQL DB is used as a final destination for curated COVID-19 datasets. Data from processed pipelines (e.g., testing or hospital admissions) can be written to SQL tables for easy querying, reporting, or BI consumption.
 
