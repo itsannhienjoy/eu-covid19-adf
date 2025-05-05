@@ -1,0 +1,152 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "jdo-covid19-adf"
+		},
+		"ls_ablob_jdocovid19blob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_ablob_jdocovid19blob'"
+		},
+		"ls_adls_jdcovid19datalake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_adls_jdcovid19datalake'"
+		},
+		"ls_databricks_covid19_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_databricks_covid19'"
+		},
+		"ls_sql_covid19_db_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ls_sql_covid19_db'"
+		},
+		"ls_adls_jdcovid19datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://covid19jdodatalake.dfs.core.windows.net/"
+		},
+		"ls_databricks_covid19_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0504-050550-ljkyns9y"
+		},
+		"ls_http_ecdc_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"ls_sql_covid19_db_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "jdo-demo-svr.database.windows.net"
+		},
+		"ls_sql_covid19_db_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "covid19-db"
+		},
+		"ls_sql_covid19_db_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "adm"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "jdo-covid19-adf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_ablob_jdocovid19blob_connectionString": {
+						"value": "[parameters('ls_ablob_jdocovid19blob_connectionString')]"
+					},
+					"ls_adls_jdcovid19datalake_accountKey": {
+						"value": "[parameters('ls_adls_jdcovid19datalake_accountKey')]"
+					},
+					"ls_databricks_covid19_accessToken": {
+						"value": "[parameters('ls_databricks_covid19_accessToken')]"
+					},
+					"ls_sql_covid19_db_password": {
+						"value": "[parameters('ls_sql_covid19_db_password')]"
+					},
+					"ls_adls_jdcovid19datalake_properties_typeProperties_url": {
+						"value": "[parameters('ls_adls_jdcovid19datalake_properties_typeProperties_url')]"
+					},
+					"ls_databricks_covid19_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_databricks_covid19_properties_typeProperties_existingClusterId')]"
+					},
+					"ls_http_ecdc_properties_typeProperties_url": {
+						"value": "[parameters('ls_http_ecdc_properties_typeProperties_url')]"
+					},
+					"ls_sql_covid19_db_properties_typeProperties_server": {
+						"value": "[parameters('ls_sql_covid19_db_properties_typeProperties_server')]"
+					},
+					"ls_sql_covid19_db_properties_typeProperties_database": {
+						"value": "[parameters('ls_sql_covid19_db_properties_typeProperties_database')]"
+					},
+					"ls_sql_covid19_db_properties_typeProperties_userName": {
+						"value": "[parameters('ls_sql_covid19_db_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "jdo-covid19-adf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'jdo-covid19-adf_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "jdo-covid19-adf_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'jdo-covid19-adf_ArmTemplate_1')]"
+			]
+		}
+	]
+}

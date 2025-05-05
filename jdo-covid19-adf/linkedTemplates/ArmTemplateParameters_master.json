@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "jdo-covid19-adf"
+		},
+		"ls_ablob_jdocovid19blob_connectionString": {
+			"value": ""
+		},
+		"ls_adls_jdcovid19datalake_accountKey": {
+			"value": ""
+		},
+		"ls_databricks_covid19_accessToken": {
+			"value": ""
+		},
+		"ls_sql_covid19_db_password": {
+			"value": ""
+		},
+		"ls_adls_jdcovid19datalake_properties_typeProperties_url": {
+			"value": "https://covid19jdodatalake.dfs.core.windows.net/"
+		},
+		"ls_databricks_covid19_properties_typeProperties_existingClusterId": {
+			"value": "0504-050550-ljkyns9y"
+		},
+		"ls_http_ecdc_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"ls_sql_covid19_db_properties_typeProperties_server": {
+			"value": "jdo-demo-svr.database.windows.net"
+		},
+		"ls_sql_covid19_db_properties_typeProperties_database": {
+			"value": "covid19-db"
+		},
+		"ls_sql_covid19_db_properties_typeProperties_userName": {
+			"value": "adm"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
