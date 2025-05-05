@@ -1,0 +1,34 @@
+{
+	"name": "tr_process_hospitalAdmissions",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipeline": {
+			"pipelineReference": {
+				"referenceName": "pl_process_hospitalAdmissions",
+				"type": "PipelineReference"
+			}
+		},
+		"type": "TumblingWindowTrigger",
+		"typeProperties": {
+			"frequency": "Hour",
+			"interval": 24,
+			"startTime": "2025-05-04T03:12:00Z",
+			"delay": "00:00:00",
+			"maxConcurrency": 50,
+			"retryPolicy": {
+				"intervalInSeconds": 30
+			},
+			"dependsOn": [
+				{
+					"type": "TumblingWindowTriggerDependencyReference",
+					"offset": "0.23:58:00",
+					"referenceTrigger": {
+						"referenceName": "tr_ingest_ecdc",
+						"type": "TriggerReference"
+					}
+				}
+			]
+		}
+	}
+}

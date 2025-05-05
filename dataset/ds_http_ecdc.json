@@ -1,0 +1,35 @@
+{
+	"name": "ds_http_ecdc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_http_ecdc",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"relativeUrl": {
+				"type": "string",
+				"defaultValue": "cloudboxacademy/covid19/main/ecdc_data/cases_deaths.csv"
+			}
+		},
+		"folder": {
+			"name": "source"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().relativeUrl",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "jdo-covid19-adf",
+	"location": "australiaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1c4ec5d6-1958-45e1-a1a2-b7260a66dacc",
+		"tenantId": "484c86be-5ba9-43cd-b098-46ff670bd619"
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"name": "pl_process_population",
+	"properties": {
+		"activities": [
+			{
+				"name": "Tranform Popultation Data",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/covid/transformation/transform_population_data"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_databricks_covid19",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "process"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-05-04T06:58:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

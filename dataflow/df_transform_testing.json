@@ -1,0 +1,163 @@
+{
+	"name": "df_transform_testing",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_adls_raw_ecdc_tesing",
+						"type": "DatasetReference"
+					},
+					"name": "SourceTesting"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_adls_dimDate",
+						"type": "DatasetReference"
+					},
+					"name": "SourceDateLookup"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_adls_countryLookup",
+						"type": "DatasetReference"
+					},
+					"name": "SourceCountryLookup"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_adls_processed_ecdc_testing",
+						"type": "DatasetReference"
+					},
+					"name": "SinkTesting"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DeriveYearWeek"
+				},
+				{
+					"name": "AggregateDate"
+				},
+				{
+					"name": "LookupCountryCode"
+				},
+				{
+					"name": "SelectRequiredFields"
+				},
+				{
+					"name": "JoinWithDate"
+				},
+				{
+					"name": "SortTesting"
+				},
+				{
+					"name": "SelectForSink"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          country_code as string,",
+				"          year_week as string,",
+				"          new_cases as string,",
+				"          tests_done as string,",
+				"          population as string,",
+				"          testing_rate as string,",
+				"          positivity_rate as string,",
+				"          testing_data_source as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceTesting",
+				"source(output(",
+				"          date_key as date,",
+				"          full_date_alternate_key as string,",
+				"          year_num as integer,",
+				"          year_quarter_num as integer,",
+				"          quarter_num as integer,",
+				"          quarter_txt as string,",
+				"          year_month_num as integer,",
+				"          month_num as integer,",
+				"          month_name as string,",
+				"          month_short_name as string,",
+				"          week_num_of_year as integer,",
+				"          day_num_of_year as short,",
+				"          day_num_of_quarter as short,",
+				"          day_num_of_month as short,",
+				"          day_num_of_week as short,",
+				"          day_name as string,",
+				"          day_short_name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceDateLookup",
+				"source(output(",
+				"          country as string,",
+				"          country_code_2_digit as string,",
+				"          country_code_3_digit as string,",
+				"          continent as string,",
+				"          population as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceCountryLookup",
+				"SourceDateLookup derive(iso_year_week = toString(iif(and(week_num_of_year == 1, month_num == 12), year_num + 1, iif(and(week_num_of_year >= 52, month_num == 1), year_num - 1, year_num))) + \"-W\" + lpad(toString(week_num_of_year),2,\"0\")) ~> DeriveYearWeek",
+				"DeriveYearWeek aggregate(groupBy(iso_year_week),",
+				"     week_start_date = min(full_date_alternate_key),",
+				"          week_end_date = max(full_date_alternate_key)) ~> AggregateDate",
+				"SourceTesting, SourceCountryLookup lookup(SourceTesting@country == SourceCountryLookup@country,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupCountryCode",
+				"LookupCountryCode select(mapColumn(",
+				"          country = SourceTesting@country,",
+				"          country_code_3_digit,",
+				"          country_code_2_digit,",
+				"          reported_year_week = year_week,",
+				"          new_cases,",
+				"          tests_done,",
+				"          population = SourceTesting@population,",
+				"          testing_rate,",
+				"          positivity_rate,",
+				"          testing_data_source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectRequiredFields",
+				"SelectRequiredFields, AggregateDate join(reported_year_week == iso_year_week,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> JoinWithDate",
+				"JoinWithDate sort(asc(country, true),",
+				"     asc(reported_year_week, true)) ~> SortTesting",
+				"SortTesting select(mapColumn(",
+				"          country,",
+				"          country_code_3_digit,",
+				"          country_code_2_digit,",
+				"          reported_year_week,",
+				"          reported_week_start_date = week_start_date,",
+				"          reported_week_end_date = week_end_date,",
+				"          new_cases,",
+				"          tests_done,",
+				"          population,",
+				"          testing_rate,",
+				"          positivity_rate,",
+				"          testing_data_source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectForSink",
+				"SelectForSink sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkTesting"
+			]
+		}
+	}
+}
